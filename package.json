@@ -1,0 +1,17 @@
+{
+  "name": "urlguard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs-pro": "^3.5.5",
+    "axios": "^0.24.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2"
+  }
+}

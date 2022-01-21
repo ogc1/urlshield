@@ -1,0 +1,49 @@
+<script>
+  // Initialize the agent at application startup.
+  const fpPromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.onload = resolve;
+      script.onerror = reject;
+      script.async = true;
+      script.src = 'https://cdn.jsdelivr.net/npm/'
+        + '@fingerprintjs/fingerprintjs-pro@3/dist/fp.min.js';
+      document.head.appendChild(script);
+    })
+    .then(() => FingerprintJS.load({
+      token: 'ZraMLJcg4uBXSHbFMqVi',
+      endpoint: 'https://metrics.urlguard.io'
+    }));
+
+    // Get the visitor identifier when you need it.
+    fpPromise
+      .then(fp => fp.get({ extendedResult: true }))
+      .then(result => {console.log(result.visitorId);
+      console.log(result)});
+
+
+  getBrowserData();
+
+  // window.location.replace("https://google.com")
+
+  
+
+  function getBrowserData() {
+  
+  console.log('clientInformation.language', clientInformation.language);
+  console.log('user agent', navigator.userAgent);
+  console.log('vendor', navigator.vendor);
+  console.log('useragentdata', navigator.userAgentData);
+  if (navigator.userAgentData) {
+    console.log('useragentdata mobile', navigator.userAgentData.mobile);
+    console.log('useragentdata platform', navigator.userAgentData.platform);
+  }
+  console.log('mobile', navigator.mobile);
+  console.log('platform', navigator.platform);
+  console.log('height', screen.height);
+  console.log('width', screen.width);
+  console.log('nav app code', navigator.appCodeName);
+  console.log('nav app name', navigator.appName);
+  console.log('nav app version', navigator.appVersion);
+}
+
+</script>
