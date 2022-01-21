@@ -1,0 +1,25 @@
+<h1>URLGUARD</h1>
+<h2>Malicious URL Blocked</h2>
+<h3>Threat Infomation:</h3>
+
+<div>
+    <% safetyInfo.forEach(function(item) { %>
+      <div class='box'>
+        <ul>
+          <li>
+            Threat Type: <%= item.threatType %>
+          </li>
+          <li>
+            Platform Type: <%= item.platformType %>
+          </li>
+          <li>
+            URL: <%= item.threat.url %>
+          </li>
+          <li>
+            Source: <a href="https://safebrowsing.google.com/">Google Safe Browsing</a>
+          </li>
+        </ul>
+      </div>
+    <% }); %>
+
+</div>

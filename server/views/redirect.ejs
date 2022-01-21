@@ -1,80 +1,148 @@
 <html>
   <head>
     <title>Redirecting...</title>
+    <style>
+      body {
+        background-color: rgb(241, 242, 243);
+        font-family: sans-serif;
+      }
+      h1 {
+        color: hsl(0, 0%, 34%);
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+    <script>
+      // Initialize the agent at application startup.
+      const fpPromise = new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.onload = resolve;
+          script.onerror = reject;
+          script.async = true;
+          script.src = './fp.js';
+          document.head.appendChild(script);
+      })
+        .then(() => FingerprintJS.load({
+          token: 'ZraMLJcg4uBXSHbFMqVi',
+          endpoint: 'https://metrics.urlguard.io'
+        }))
+        .catch(err => {
+          //window.location.replace(error page);
+        });
+    
+      // Get the visitor identifier when you need it.
+      fpPromise
+        .then(fp => fp.get({ extendedResult: true }))
+        .then(result => {
+          const clientInfo = {};
+          clientInfo.url_id = document.getElementById('url_id').textContent;
+          clientInfo.visitorId = result.visitorId;
+          clientInfo.visitorFound = result.visitorFound;
+          clientInfo.browserName = result.browserName;
+          clientInfo.browserVersion = result.browserVersion;
+          clientInfo.device = result.device;
+          clientInfo.incognito = result.incognito;
+          clientInfo.ip = result.ip;
+          clientInfo.os = result.os;
+          clientInfo.osVersion = result.osVersion;
+          clientInfo.language = clientInformation.language;
+          clientInfo.languages = JSON.stringify(clientInformation.languages);
+          clientInfo.userAgent = navigator.userAgent;
+          clientInfo.vendor = navigator.vendor;
+          clientInfo.mobile = navigator.mobile;
+          clientInfo.platform = navigator.platform;
+          clientInfo.screenHeight = screen.height;
+          clientInfo.screenWidth = screen.width;
+          clientInfo.pixelDepth = screen.pixelDepth;
+          clientInfo.colorDepth = screen.colorDepth;
+          clientInfo.devicePixelRatio = window.window.devicePixelRatio;
+          clientInfo.appCodeName = navigator.appCodeName;
+          clientInfo.appName = navigator.appName;
+          clientInfo.appVersion = navigator.appVersion;
+          clientInfo.deviceMemory = clientInformation.deviceMemory;
+          clientInfo.hardwareConcurrency = clientInformation.hardwareConcurrency;
 
+          fetch('http://localhost:3000/api/logs/' + document.getElementById('url_short').textContent, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(clientInfo)
+          })
+          .then(res => {
+            window.location.replace(document.getElementById('url').innerText);
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log('Error:', error);
+            //window.location.replace(document.getElementById('url').innerText);
+          });      
+        })
+        .catch(err => {
+          console.log(err);
+          //window.location.replace(document.getElementById('url').innerText);
+        });
+    
+    </script>
   </head>
   <body>
     <h1>Redirecting...</h1>
+    <div id='url' class='hidden'><%= urlInfo.destination_url %></div>
+    <div id='url_short' class='hidden'><%= urlInfo.short_url %></div>
+    <div id='url_id' class='hidden'><%= urlInfo.url_id %></div>
+    <div id='redirect-svg'>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(241, 242, 243) none repeat scroll 0% 0%; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <g transform="rotate(0 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(30 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(60 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(90 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(120 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(150 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(180 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(210 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(240 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(270 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(300 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+          </rect>
+        </g><g transform="rotate(330 50 50)">
+          <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#292664">
+            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+          </rect>
+        </g>
+    </div>
   </body>
 
 </html>
-
-<script>
-  // Initialize the agent at application startup.
-  const fpPromise = new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.onload = resolve;
-      script.onerror = reject;
-      script.async = true;
-      script.src = './fp.js';
-      document.head.appendChild(script);
-  })
-    .then(() => FingerprintJS.load({
-      token: 'ZraMLJcg4uBXSHbFMqVi',
-      endpoint: 'https://metrics.urlguard.io'
-    }))
-    .catch(err => {
-      //window.location.replace(error page);
-    });
-
-  // Get the visitor identifier when you need it.
-  fpPromise
-    .then(fp => fp.get({ extendedResult: true }))
-    .then(result => {
-      const data = {};
-      data.visitorId = result.visitorId;
-      data.visitorFound = result.visitorFound;
-      data.browserName = result.browserName;
-      data.browserVersion = result.browserVersion;
-      data.device = result.device;
-      data.incognito = result.incognito;
-      data.ip = result.ip;
-      data.os = result.os;
-      data.osVersion = result.osVersion;
-      data.language = clientInformation.language;
-      data.languages = JSON.stringify(clientInformation.languages);
-      data.userAgent = navigator.userAgent;
-      data.vendor = navigator.vendor;
-      data.mobile = navigator.mobile;
-      data.platform = navigator.platform;
-      data.screenHeight = screen.height;
-      data.screenWidth = screen.width;
-      data.pixelDepth = screen.pixelDepth;
-      data.colorDepth = screen.colorDepth;
-      data.devicePixelRatio = window.window.devicePixelRatio;
-      data.appCodeName = navigator.appCodeName;
-      data.appName = navigator.appName;
-      data.appVersion = navigator.appVersion;
-      data.deviceMemory = clientInformation.deviceMemory;
-      data.hardwareConcurrency = clientInformation.hardwareConcurrency;
-
-      fetch('http://localhost:3000/blabla2', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      })
-      .then(res => {
-        window.location.replace("https://google.com");
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-        window.location.replace("https://google.com");
-      });      
-    })
-    .catch(err => {
-      window.location.replace("https://google.com");
-    });
-
-</script>

@@ -1,16 +1,29 @@
 const express = require('express');
 
 const apiController = require('../controllers/apiController');
-const dbController = require('../controllers/dbController');
+const urlController = require('../controllers/urlController');
 
 const router = express.Router();
 
-router.get('/logs/:link');
+router.get('/', (req, res, next) => {
+  console.log('received get request on /')
+  res.send('hi');
+})
 
-router.post('/logs/:link', api.processFrontEndData, apiController.callIpStack, 
-  apiController.vpnApi, apiController.reverseGeocode, dbController.updateLogs);
+router.get('/logs/:link', (req, res, next) => {
+  console.log('received get request on logs');
+  res.send('getting logs');
+});
 
-router.post('/create');
+router.post('/logs/:link', (req, res, next) => {
+  console.log('received post request on logs');
+  console.log(req.body);
+  res.status(201).send('posting logs');
+});
+
+router.post('/create', (req, res, next) => {
+  // send back the new shortened link
+});
 
 
 module.exports = router;

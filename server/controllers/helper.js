@@ -20,4 +20,11 @@ helper.generateRandomUrl = () => {
   return url;
 }
 
+helper.sanitizeInput = (str) => {
+
+  // regex stuff here
+
+  return str;
+};
+
 module.exports = helper;

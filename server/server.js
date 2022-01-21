@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const ejs = require('ejs');
 const api = require('./controllers/apiController.js');
+const urlController = require('./controllers/urlController.js');
 const db = require('./models/dbModel.js');
 const apiRouter = require('./routes/api');
 
@@ -9,18 +10,11 @@ const app = express();
 const PORT = 3000;
 
 /**
- * handle nginx reverse proxy configuration
- */
-app.set('trust proxy', true);
-
-/**
- * handle parsing request body
+ * configure server
  */
 app.use(express.json());
-
-/**
- * handle requests for static files
- */
+app.set('view engine', 'ejs');
+app.set('trust proxy', true);
 app.use(express.static(path.resolve(__dirname, '../client')));
 
 /**
@@ -28,21 +22,26 @@ app.use(express.static(path.resolve(__dirname, '../client')));
  */
 app.use('/api', apiRouter);
 
-
 app.get('/', (req, res) => {
   // Deliver React app
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.get('/:link', api.verifySafety, (req, res, next) => {
-  res.sendFile(path.join(__dirname, 'redirect.html'));
+app.get('/:link', urlController.getUrlInfo, api.verifySafety, (req, res, next) => {
+  if (res.locals.safetyInfo) {
+    res.render('unsafe', {safetyInfo: res.locals.safetyInfo});
+  } else {
+    res.render('redirect', {urlInfo: res.locals.urlInfo});
+  }
+  
 });
 
 /**
  * 404 handler
  */
- app.use('*', (req, res) => {
-  res.status(404).send('Not Found');
+
+ app.use((req, res) => {
+  res.status(404).send('Resource not found');
 });
 
 /**

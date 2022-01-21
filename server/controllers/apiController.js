@@ -1,42 +1,15 @@
 const axios = require('axios');
-const dbController = require('./dbController');
+const urlController = require('./urlController');
 
 const ipstackKey = '1834644106af119462bd28f01eeac372';
 const googleKey = 'AIzaSyC7QGTlwQzORmFtoGuCwjQuexQ3jHCV8us';
 const vpnapikey = 'facc450fe0f24171b0ed2505289ff4fa';
 
-//         const location_info = {
-//           country_code: ipstack.data.country_code,
-//           country_name: ipstack.data.country_name,
-//           country_flag: ipstack.data.location.country_flag,
-//           region_code: ipstack.data.region_code,
-//           region_name: ipstack.data.region_name,
-//           city: ipstack.data.city,
-//           zip: ipstack.data.zip,
-//           latitude: ipstack.data.latitude,
-//           longitude: ipstack.data.longitude,
-//           formatted_address: google.data.results[0].formatted_address,
-//         };
-
-//         const client_info = {
-//           useragent: req.headers['user-agent']
-//         };
-
-//         const network_info = {  
-//           ip: ipstack.data.ip,
-//           ip_type: ipstack.data.type,
-//           vpn: vpndata.data.security.vpn,
-//           proxy: vpndata.data.security.proxy,
-//           tor: vpndata.data.security.tor,
-//           relay: vpndata.data.security.relay,
-//           isp: ipstack.data.connection.isp,
-//           asn: ipstack.data.connection.asn
-//         };
-
 const api = {};
 
 api.processFrontEndData = (req, res, next) => {
-  // req.body
+  console.log(req.body);
+  res.send('ok');
 };
 
 api.vpnApi = (req, res, next) => {
@@ -78,8 +51,9 @@ api.callIpStack = (req, res, next) => {
 
 api.verifySafety = (req, res, next) => {
 
-  const malware = 'https://www.bceaoci.com';
-  const safe = 'https://wikipedia.org';
+  if (!res.locals.destination_url) {
+    return next();
+  }
 
   const googleBody =  {
     "client": {
@@ -91,7 +65,7 @@ api.verifySafety = (req, res, next) => {
       "platformTypes": ["ANY_PLATFORM"],
       "threatEntryTypes": ["URL"],
       "threatEntries": [
-        {"url": malware }
+        {"url": res.locals.urlInfo.destination_url }
       ]
     }
   };
@@ -107,9 +81,16 @@ api.verifySafety = (req, res, next) => {
   })
   .then(function (response) {
     console.log(response.data);
+    if (response.data.matches) {
+      res.locals.safetyInfo = response.data.matches;
+    } else {
+      res.locals.safetyInfo = undefined;
+    }
+    return next();
   })
   .catch(function (error) {
     console.log(error);
+    return next();
   });
   
 };
