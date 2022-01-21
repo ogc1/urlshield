@@ -35,6 +35,10 @@ const vpnapikey = 'facc450fe0f24171b0ed2505289ff4fa';
 
 const api = {};
 
+api.processFrontEndData = (req, res, next) => {
+  // req.body
+};
+
 api.vpnApi = (req, res, next) => {
   const ip = '173.95.50.147';
   axios.get('https://vpnapi.io/api/' + ip, {
@@ -74,8 +78,8 @@ api.callIpStack = (req, res, next) => {
 
 api.verifySafety = (req, res, next) => {
 
-  const url1 = 'https://www.bceaoci.com';
-  const url2 = 'https://wikipedia.org';
+  const malware = 'https://www.bceaoci.com';
+  const safe = 'https://wikipedia.org';
 
   const googleBody =  {
     "client": {
@@ -87,7 +91,7 @@ api.verifySafety = (req, res, next) => {
       "platformTypes": ["ANY_PLATFORM"],
       "threatEntryTypes": ["URL"],
       "threatEntries": [
-        {"url": url1 }
+        {"url": malware }
       ]
     }
   };

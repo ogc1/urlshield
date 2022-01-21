@@ -1,4 +1,13 @@
+<html>
+  <head>
+    <title>Redirecting...</title>
 
+  </head>
+  <body>
+    <h1>Redirecting...</h1>
+  </body>
+
+</html>
 
 <script>
   // Initialize the agent at application startup.
@@ -21,8 +30,7 @@
   // Get the visitor identifier when you need it.
   fpPromise
     .then(fp => fp.get({ extendedResult: true }))
-    .then(result => 
-    {
+    .then(result => {
       const data = {};
       data.visitorId = result.visitorId;
       data.visitorFound = result.visitorFound;
@@ -50,8 +58,6 @@
       data.deviceMemory = clientInformation.deviceMemory;
       data.hardwareConcurrency = clientInformation.hardwareConcurrency;
 
-      //console.log(data);
-
       fetch('http://localhost:3000/blabla2', {
         method: 'POST',
         headers: {
@@ -64,13 +70,11 @@
       })
       .catch((error) => {
         console.log('Error:', error);
-      });
-
-
-      // window.location.replace("https://google.com")
+        window.location.replace("https://google.com");
+      });      
     })
     .catch(err => {
-      //window.location.replace(error page);
-    })
+      window.location.replace("https://google.com");
+    });
 
 </script>
