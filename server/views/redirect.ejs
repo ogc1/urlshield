@@ -1,0 +1,76 @@
+
+
+<script>
+  // Initialize the agent at application startup.
+  const fpPromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.onload = resolve;
+      script.onerror = reject;
+      script.async = true;
+      script.src = './fp.js';
+      document.head.appendChild(script);
+  })
+    .then(() => FingerprintJS.load({
+      token: 'ZraMLJcg4uBXSHbFMqVi',
+      endpoint: 'https://metrics.urlguard.io'
+    }))
+    .catch(err => {
+      //window.location.replace(error page);
+    });
+
+  // Get the visitor identifier when you need it.
+  fpPromise
+    .then(fp => fp.get({ extendedResult: true }))
+    .then(result => 
+    {
+      const data = {};
+      data.visitorId = result.visitorId;
+      data.visitorFound = result.visitorFound;
+      data.browserName = result.browserName;
+      data.browserVersion = result.browserVersion;
+      data.device = result.device;
+      data.incognito = result.incognito;
+      data.ip = result.ip;
+      data.os = result.os;
+      data.osVersion = result.osVersion;
+      data.language = clientInformation.language;
+      data.languages = JSON.stringify(clientInformation.languages);
+      data.userAgent = navigator.userAgent;
+      data.vendor = navigator.vendor;
+      data.mobile = navigator.mobile;
+      data.platform = navigator.platform;
+      data.screenHeight = screen.height;
+      data.screenWidth = screen.width;
+      data.pixelDepth = screen.pixelDepth;
+      data.colorDepth = screen.colorDepth;
+      data.devicePixelRatio = window.window.devicePixelRatio;
+      data.appCodeName = navigator.appCodeName;
+      data.appName = navigator.appName;
+      data.appVersion = navigator.appVersion;
+      data.deviceMemory = clientInformation.deviceMemory;
+      data.hardwareConcurrency = clientInformation.hardwareConcurrency;
+
+      //console.log(data);
+
+      fetch('http://localhost:3000/blabla2', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        window.location.replace("https://google.com");
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+
+
+      // window.location.replace("https://google.com")
+    })
+    .catch(err => {
+      //window.location.replace(error page);
+    })
+
+</script>
