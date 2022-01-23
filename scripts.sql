@@ -17,30 +17,29 @@ CREATE TABLE location_logs (
 
 CREATE TABLE client_logs (
    _id serial PRIMARY KEY,
-   url_id integer FOREIGN KEY REFERENCES url_map(_id)
-   log_id integer FOREIGN KEY REFERENCES basic_logs(_id),
-   browserName
-   browserVersion
-   visitor_id
-   device
-   os
-   incognito
-   language
-   languages_str
-   useragent
-   vendor
-   platform
-   mobile
-   uad_mobile
-   uad_platform
-   height
-   width
-   pixel depth
-   color depth
-   pixel ratio
-   nav app
-   device mem
-   hardware concurrency
+   url_id integer REFERENCES url_map(_id),
+   log_id integer REFERENCES basic_logs(_id),
+   visitor_id varchar(100),
+   visitor_found boolean,
+   browser_name varchar(100),
+   browser_version varchar(100),
+   device varchar(100),
+   incognito boolean,
+   os varchar(100),
+   osversion varchar(200),
+   language_id varchar(100),
+   languages_str varchar(200),
+   useragent varchar(500),
+   vendor varchar(100),
+   platform varchar(100),
+   mobile varchar(100),
+   screen_height varchar(100),
+   screen_width varchar(100),
+   pixel_depth varchar(100),
+   color_depth varchar(100),
+   pixel_ratio varchar(100),
+   device_mem varchar(100),
+   hardware_concurrency varchar(100)
 )
 
 CREATE TABLE network_logs (
@@ -57,10 +56,16 @@ CREATE TABLE network_logs (
   relay boolean
 )
 
-CLEAN WAY TO VIEW LOGS
+-- COMPLETE LOGS --
 
-SELECT l._id AS log_id, u.short_url, u.destination_url, l.log_timestamp, l.ip_address
+SELECT *
 FROM url_map u
 INNER JOIN basic_logs l
 ON u._id = l.url_id
-WHERE SHORT_URL = 'htgdtf';
+INNER JOIN network_logs n
+ON l._id = n.log_id
+INNER JOIN location_logs geo
+ON l._id = geo.log_id
+INNER JOIN client_logs c
+ON l._id = c.log_id
+WHERE u.short_url = $1;
