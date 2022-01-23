@@ -1,3 +1,5 @@
+const express = require('express');
+
 const helper = {};
 
 helper.generateRandomUrl = () => {
@@ -18,6 +20,11 @@ helper.generateRandomUrl = () => {
   const url = String.fromCharCode(...randomNums);
 
   return url;
+}
+
+helper.acknowledgeReceipt = (req, res, next) => {
+  res.status(201).send('received'); 
+  next(); 
 }
 
 helper.sanitizeInput = (str) => {

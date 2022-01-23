@@ -1,29 +1,23 @@
 const express = require('express');
 
+const helper = require('../controllers/helper');
 const apiController = require('../controllers/apiController');
 const urlController = require('../controllers/urlController');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  console.log('received get request on /')
-  res.send('hi');
-})
+router.get('/logs/basic/:link', urlController.getLogs);
 
-router.get('/logs/:link', (req, res, next) => {
-  console.log('received get request on logs');
-  res.send('getting logs');
+router.get('/logs/extended/:link', urlController.getExtendedLogs);
+
+router.post('/logs/:link', helper.acknowledgeReceipt,
+  apiController.vpnApi, apiController.callIpStack, urlController.updateBasicLogs, urlController.updateNetworkLogs,
+  apiController.reverseGeocode, urlController.updateLocationLogs, urlController.updateClientLogs);
+
+router.get('/get/sessionId', (req, res, next) => {
+  res.json({sessionId: req.cookies.sessionId});
 });
 
-router.post('/logs/:link', (req, res, next) => {
-  console.log('received post request on logs');
-  console.log(req.body);
-  res.status(201).send('posting logs');
-});
-
-router.post('/create', (req, res, next) => {
-  // send back the new shortened link
-});
-
+router.post('/create', urlController.createLink);
 
 module.exports = router;
