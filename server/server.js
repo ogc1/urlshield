@@ -6,6 +6,7 @@ const urlController = require('./controllers/urlController.js');
 const db = require('./models/dbModel.js');
 const { v4: uuidv4 } = require('uuid');
 const apiRouter = require('./routes/api');
+const accountRouter = require('./routes/account');
 const cookieParser = require('cookie-parser');
 
 
@@ -27,6 +28,7 @@ app.use(express.static(path.resolve(__dirname, '../client/static')));
  * define route handlers
  */
 app.use('/api', apiRouter);
+app.use('/account', accountRouter);
 
 app.get('/', (req, res, next) => {
   if (!req.cookies.sessionId) res.cookie('sessionId', uuidv4(), { httpOnly: true , maxAge: 31536000000});

@@ -56,6 +56,20 @@ CREATE TABLE network_logs (
   relay boolean
 )
 
+CREATE TABLE session_logs (
+  _id serial PRIMARY KEY,
+  session_id varchar(200) UNIQUE,
+  account_id integer REFERENCES accounts(_id)
+);
+
+CREATE TABLE accounts (
+  _id serial PRIMARY KEY,
+  username varchar(200),
+  user_email varchar(200),
+  user_pwd varchar(200)
+);
+
+
 -- COMPLETE LOGS --
 
 SELECT *

@@ -19,7 +19,7 @@ urlController.getUrlInfo = (req, res, next) => {
 };
 
 urlController.createLink = (req, res, next) => {
-  const destination = req.body.destination;
+  const destination = helper.sanitizeInput(req.body.destination);
   const ip = req.body.ip;
   const sessionId = req.body.sessionId;
   const short_url = helper.generateRandomUrl();

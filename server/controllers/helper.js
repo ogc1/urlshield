@@ -29,9 +29,19 @@ helper.acknowledgeReceipt = (req, res, next) => {
 
 helper.sanitizeInput = (str) => {
 
-  // regex stuff here
+  const pattern = /^(https?:\/\/)/i;
 
-  return str;
+  if (pattern.test(str)) return str;
+  else return 'https://' + str;
+
+};
+
+helper.sanitizeEmail = (str) => {
+  str = str.trim();
+  const emailPattern = /^[a-zA-Z\d\.\+\-_]+@[a-zA-Z\d\.\+\-_]+\.[a-zA-Z\d\.\+\-_]+$/i;
+
+  if (emailPattern.test(str)) return true;
+  else return false;
 };
 
 module.exports = helper;

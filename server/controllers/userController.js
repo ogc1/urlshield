@@ -5,7 +5,7 @@ userController.getUserInfo = (req, res, next) => {
 
 };
 
-userController.addUser = (req, res, next) => {
+userController.signupUser = (req, res, next) => {
   
 };
 

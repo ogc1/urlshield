@@ -1,41 +1,56 @@
-<h1>Index.html</h1>
-<script>
-  const destination = 'https://youtube.com';
+<head>
+  <style>
+
+  </style>
+</head>
+<body>
+  <h1>Index.html</h1>
+
+  <p>
+    Create a free account to enjoy:
+
+    - Easy Link Shortening
+    - Protection Against Malicious URLs
+    - Detailed Link Analytics
+  </p>
+  <script>
+    const destination = 'https://youtube.com';
+    
   
-
-  // getIp().then(ip => {
-  //   getSessionId().then(sessionId => {
-  //     console.log(ip, sessionId);
-  //     const data = {
-  //       destination: destination,
-  //       ip: ip,
-  //       sessionId: sessionId
-  //     };
-  //     fetch('http://localhost:3000/api/create', {
-  //       method: 'POST', 
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(data),
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log('Success:', data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //     });
-  //   });
-  // });
-
-  function getSessionId() {
-    return fetch('http://localhost:3000/api/get/sessionId')
-      .then(data => data.json())
-      .then(data => data.sessionId)
-  }
-
-  function getIp() {
-    return fetch('https://api64.ipify.org?format=json')
-      .then(data => data.json())
-      .then(data => data.ip)
-  }
-
-</script>
+    // getIp().then(ip => {
+    //   getSessionId().then(sessionId => {
+    //     console.log(ip, sessionId);
+    //     const data = {
+    //       destination: destination,
+    //       ip: ip,
+    //       sessionId: sessionId
+    //     };
+    //     fetch('http://localhost:3000/api/create', {
+    //       method: 'POST', 
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify(data),
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       console.log('Success:', data);
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error:', error);
+    //     });
+    //   });
+    // });
+  
+    function getSessionId() {
+      return fetch('http://localhost:3000/api/get/sessionId')
+        .then(data => data.json())
+        .then(data => data.sessionId)
+    }
+  
+    function getIp() {
+      return fetch('https://api64.ipify.org?format=json')
+        .then(data => data.json())
+        .then(data => data.ip)
+    }
+  
+  </script>
+</body>
