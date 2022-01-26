@@ -21,12 +21,14 @@ urlController.getUrlInfo = (req, res, next) => {
 urlController.createLink = (req, res, next) => {
   const destination = helper.sanitizeInput(req.body.destination);
   const ip = req.body.ip;
-  const sessionId = req.body.sessionId;
+  const sessionId = req.cookies.sessionId;
+  const expiration = req.body.expiration;
   const short_url = helper.generateRandomUrl();
 
-  db.query('INSERT INTO url_map (short_url, destination_url, created_ip, session_id) VALUES ($1, $2, $3, $4);', [short_url, destination, ip, sessionId])
-    .then(() => {
+  db.query('INSERT INTO url_map (short_url, destination_url, created_ip, session_id, expiration) VALUES ($1, $2, $3, $4, $5) RETURNING _id;', [short_url, destination, ip, sessionId, expiration])
+    .then((response) => {
       const info = {
+        id: response.rows[0]._id,
         short_url: short_url,
         destination_url: destination,
         ip: ip
@@ -165,14 +167,10 @@ urlController.getExtendedLogs = (req, res, next) => {
   ON l._id = c.log_id
   WHERE u.short_url = $1;`, [short_url])
   .then(result => {
-    if (!result.rows.length) res.status(400).send('Bad request');
-    else res.status(200).json(result.rows);
+    // if (!result.rows.length) res.status(400).send('Bad request');
+    res.status(200).json(result.rows);
   })
   .catch(err => next(err));
 };
-
-
-
-
 
 module.exports = urlController;

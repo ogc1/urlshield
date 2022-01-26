@@ -1,25 +1,46 @@
-<h1>URLGUARD</h1>
-<h2>Malicious URL Blocked</h2>
-<h3>Threat Infomation:</h3>
-
-<div>
-    <% safetyInfo.forEach(function(item) { %>
-      <div class='box'>
-        <ul>
-          <li>
-            Threat Type: <%= item.threatType %>
-          </li>
-          <li>
-            Platform Type: <%= item.platformType %>
-          </li>
-          <li>
-            URL: <%= item.threat.url %>
-          </li>
-          <li>
-            Source: <a href="https://safebrowsing.google.com/">Google Safe Browsing</a>
-          </li>
-        </ul>
-      </div>
-    <% }); %>
-
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>URLSHIELD - Malicious Content Blocked</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      strong {
+        color: rgb(191, 26, 26);
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+      <header>
+        <h1>URLSHIELD</h1>
+        <h2>Malicious Content Blocked</h2>
+      </header>
+      
+      <main>
+        <h3>Threat Infomation:</h3>
+        <div>
+            <% safetyInfo.forEach(function(item) { %>
+              <div class='box'>
+                <ul>
+                  <li>
+                    Threat Type: <strong><%= item.threatType %></strong>
+                  </li>
+                  <li>
+                    Platform Type: <strong><%= item.platformType %></strong>
+                  </li>
+                  <li>
+                    URL: <strong><%= item.threat.url %></strong>
+                  </li>
+                </ul>
+              </div>
+            <% }); %>
+        </div>
+      </main>
+      
+      <footer>
+        Powered by <a href="https://safebrowsing.google.com/">Google Safe Browsing</a>
+      </footer>
+  </body>
+</html>

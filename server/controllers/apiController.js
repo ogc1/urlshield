@@ -6,54 +6,27 @@ const vpnapikey = 'facc450fe0f24171b0ed2505289ff4fa';
 
 const api = {};
 
-api.vpnApi = (req, res, next) => {
+api.getLogInfo = (req, res, next) => {
   const ip = req.body.ip;
+  res.locals.logs = {};
   axios.get('https://vpnapi.io/api/' + ip, {
     params: {
       key: vpnapikey
     }
   })
-  .then(response => {
-    res.locals.vpnApi = response.data.security;
-    return next();
+  .then(vpnApiResponse => {
+    res.locals.vpnApi = vpnApiResponse.data.security;
+    return axios.get('https://api.ipstack.com/' + ip, {params: { access_key: ipstackKey }});
   })
-  .catch(err => console.log(err));
-};
-
-api.reverseGeocode = (req, res, next) => {
-
-  const lat = res.locals.ipStack.latitude;
-  const long = res.locals.ipStack.longitude;
-  axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-    params: {
-      latlng: `${lat},${long}`,
-      key: googleKey
-    }
-  })
-  .then(response => {
-    res.locals.formatted_address = response.data.results[0].formatted_address;
-    return next();
-  })
-  .catch(err => console.log(err))
-
-};
-
-api.callIpStack = (req, res, next) => {
-  const ip = req.body.ip;
-
-  axios.get('https://api.ipstack.com/' + ip, {
-       params: { access_key: ipstackKey }
-  })
-  .then(response => {
-    res.locals.ipStack = {...response.data};
+  .then(ipInfo => {
+    res.locals.ipStack = ipInfo.data;
     next();
   })
-  .catch(err => console.log(err));
-
+  .catch(err => next(err));
 };
 
 api.verifySafety = (req, res, next) => {
-  const googleBody =  {
+  const googleRequestBody =  {
     "client": {
       "clientId": "urlguard_io",
       "clientVersion": "1.0.0"
@@ -72,13 +45,14 @@ api.verifySafety = (req, res, next) => {
     url: 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=' + googleKey,
     headers: {'Content-Type': 'application/json'},
     data: {
-      client: googleBody.client,
-      threatInfo: googleBody.threatInfo
+      client: googleRequestBody.client,
+      threatInfo: googleRequestBody.threatInfo
     }
   })
   .then(response => {
-    if (response.data.matches) res.locals.safetyInfo = response.data.matches;
-    else res.locals.safetyInfo = undefined;
+    const matches = response.data.matches;
+    if (matches) res.locals.safetyInfo = {isSafe: false, matches};
+    else res.locals.safetyInfo = {isSafe: true};
     next();
   })
   .catch(error => next(error));

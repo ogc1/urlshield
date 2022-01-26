@@ -13,15 +13,16 @@
           script.onload = resolve;
           script.onerror = reject;
           script.async = true;
-          script.src = './fp.js';
+          script.src = '/fp.js';
           document.head.appendChild(script);
       })
       .then(() => FingerprintJS.load({
-        token: '39yo9VN1HUZLuvx6tAyW',
-        endpoint: 'https://metrics.urlguard.io'
+        token: 'JAdsBMaJzNmoepNuMdFH',
+        endpoint: 'https://metrics.urlshield.io'
       }))
       .catch(err => {
-        window.location.replace(document.getElementById('url').innerText);
+        console.log(err);
+        // window.location.replace(document.getElementById('url').innerText);
       });
     
       // Get the visitor identifier when you need it.
@@ -56,24 +57,22 @@
           clientInfo.deviceMemory = clientInformation.deviceMemory;
           clientInfo.hardwareConcurrency = clientInformation.hardwareConcurrency;
 
-          fetch('http://localhost:3000/api/logs/' + document.getElementById('url_short').textContent, {
+          return fetch('http://localhost:3000/api/logs/' + document.getElementById('url_short').textContent, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(clientInfo)
-          })
-          .then(res => {
-            window.location.replace(document.getElementById('url').innerText);
-          })
-          .catch((error) => {
-            window.location.replace(document.getElementById('url').innerText);
           });
         })
+        .then(res => {
+          console.log(res);
+          // window.location.replace(document.getElementById('url').innerText);
+        })
         .catch(err => {
-          window.location.replace(document.getElementById('url').innerText);
+          console.log(err);
+          // window.location.replace(document.getElementById('url').innerText);
         });
-    
     </script>
   </head>
   <body>

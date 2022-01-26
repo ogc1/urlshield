@@ -1,4 +1,4 @@
-const express = require('express');
+
 
 const helper = {};
 
@@ -10,21 +10,13 @@ helper.generateRandomUrl = () => {
     randomNums.push(code);
   }
   randomNums = randomNums.map(num => {
-    if (num > 90 && num < 97) {
-      return num + 26;
-    } else {
-      return num;
-    }
+    if (num > 90 && num < 97) return num + 26;
+    else return num;
   });
 
   const url = String.fromCharCode(...randomNums);
 
   return url;
-}
-
-helper.acknowledgeReceipt = (req, res, next) => {
-  res.status(201).send('received'); 
-  next(); 
 }
 
 helper.sanitizeInput = (str) => {
@@ -38,7 +30,7 @@ helper.sanitizeInput = (str) => {
 
 helper.sanitizeEmail = (str) => {
   str = str.trim();
-  const emailPattern = /^[a-zA-Z\d\.\+\-_]+@[a-zA-Z\d\.\+\-_]+\.[a-zA-Z\d\.\+\-_]+$/i;
+  const emailPattern = /^[a-zA-Z\d\.\-_]+@[a-zA-Z\d\.\-_]+\.[a-zA-Z]+$/i;
 
   if (emailPattern.test(str)) return true;
   else return false;

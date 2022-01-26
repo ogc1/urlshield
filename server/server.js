@@ -3,12 +3,10 @@ const path = require('path');
 const ejs = require('ejs');
 const api = require('./controllers/apiController.js');
 const urlController = require('./controllers/urlController.js');
-const db = require('./models/dbModel.js');
 const { v4: uuidv4 } = require('uuid');
 const apiRouter = require('./routes/api');
-const accountRouter = require('./routes/account');
-const cookieParser = require('cookie-parser');
 
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -22,21 +20,20 @@ app.set('view engine', 'ejs');
 app.set('trust proxy', true);
 app.use(cookieParser());
 
-app.use(express.static(path.resolve(__dirname, '../client/static')));
+app.use(express.static(path.resolve(__dirname, '../build')));
 
 /**
  * define route handlers
  */
 app.use('/api', apiRouter);
-app.use('/account', accountRouter);
+
 
 app.get('/', (req, res, next) => {
-  if (!req.cookies.sessionId) res.cookie('sessionId', uuidv4(), { httpOnly: true , maxAge: 31536000000});
-  res.render('index');
+  res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
 app.get('/:link', urlController.getUrlInfo, api.verifySafety, (req, res, next) => {
-  if (res.locals.safetyInfo) res.render('unsafe', {safetyInfo: res.locals.safetyInfo});
+  if (!res.locals.safetyInfo.isSafe) res.render('unsafe', {safetyInfo: res.locals.safetyInfo.matches});
   else res.render('redirect', {urlInfo: res.locals.urlInfo});
 });
 
