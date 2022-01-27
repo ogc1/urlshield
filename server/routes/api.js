@@ -18,12 +18,6 @@ router.get('/logs/clicks/:link', (req, res, next) => {
   FROM url_map u
   INNER JOIN basic_logs l
   ON u._id = l.url_id
-  INNER JOIN network_logs n
-  ON l._id = n.log_id
-  INNER JOIN location_logs geo
-  ON l._id = geo.log_id
-  INNER JOIN client_logs c
-  ON l._id = c.log_id
   WHERE u.short_url = $1;`, [short_url])
   .then(result => {
     if (!result.rows.length) res.status(400).send('Bad request');
@@ -38,10 +32,6 @@ router.get('/logs/unique/:link', (req, res, next) => {
     FROM url_map u
     INNER JOIN basic_logs l
     ON u._id = l.url_id
-    INNER JOIN network_logs n
-    ON l._id = n.log_id
-    INNER JOIN location_logs geo
-    ON l._id = geo.log_id
     INNER JOIN client_logs c
     ON l._id = c.log_id
     WHERE u.short_url = $1;`, [short_url])

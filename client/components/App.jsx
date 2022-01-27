@@ -30,8 +30,8 @@ export class App extends React.Component {
 
     let appContent;
 
-    if (this.state.globalState === MAIN_STATE) appContent = <Content />;
-    if (this.state.globalState === ALT_STATE) appContent = <MyLinks />;
+    if (this.state.globalState === MAIN_STATE) appContent = <Content switchState={this.switchState} />;
+    if (this.state.globalState === ALT_STATE) appContent = <MyLinks switchState={this.switchState} />;
 
     return (
       <div id='outer-container'>

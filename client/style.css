@@ -14,8 +14,8 @@ body {
 }
 
 #my-links {
-  height: 85vh;
-  overflow: scroll;
+  height: 87vh;
+  overflow-y: scroll;
 }
 
 
@@ -31,7 +31,7 @@ header {
   grid-row: 1;
   grid-column: 1;
   display: flex;
-  background-color: darkblue;
+  background-color: rgb(35, 35, 108);
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -40,8 +40,22 @@ header {
   padding-right: 20px;
 }
 
+a {
+  color: rgb(230, 230, 230);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+#switch-button {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
 #switch-button:hover {
   text-decoration: white underline;
+  cursor: pointer;
 }
 
 #main-container {
@@ -53,7 +67,7 @@ footer {
   grid-row: 3;
   grid-column: 1;
   display: flex;
-  background-color: darkblue;
+  background-color: rgb(35, 35, 108);
   flex-direction: row;
   align-items: center;
   color:rgb(171, 171, 171);
@@ -86,14 +100,8 @@ footer ul li {
   margin-left: 20px;
 }
 
-div#dynamic {
-  height: 78vh;
-  overflow: scroll;
-  overflow-y: scroll;
-}
-
  h2 {
-  margin-left: 10px;
+  /* margin-left: 10px; */
   margin-top: 3vh;
 }
 
@@ -149,10 +157,12 @@ form button {
   font-weight: bold;
   color: white;
   height: 60px !important;
+  
 }
 
 form button:hover {
   background-color:rgb(40, 67, 220);
+  cursor: pointer;
 }
 
 form button:active {
@@ -196,6 +206,38 @@ input {
   margin-bottom: 10px;
 }
 
+.fade-in-elem {
+  animation: fadeIn 1s;
+  -webkit-animation: fadeIn 1s;
+  -moz-animation: fadeIn 1s;
+  -o-animation: fadeIn 1s;
+  -ms-animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
 /* MOBILE STYLING */
 
 @media only screen and (max-width: 900px) {
@@ -203,3 +245,16 @@ input {
     display: none;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  #content-form {
+    width: 95%;
+    min-width: 300px;
+    margin: 0 auto;
+  }
+
+  footer ul {
+    display: none;
+  }
+}
+

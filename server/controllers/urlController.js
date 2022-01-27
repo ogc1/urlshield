@@ -7,6 +7,11 @@ urlController.getUrlInfo = (req, res, next) => {
   db.query('SELECT * FROM url_map WHERE short_url = $1;', [req.params.link])
     .then(result => {
       if (!result.rows.length) res.status(404).send('URL not found in database');
+      if (result.rows[0].expiration && 
+        new Date(Date.now()) > new Date(result.rows[0].expiration)) {
+          res.status(404).send('Sorry, this URL has expired and is no longer accessible.');
+          return;
+        }
       else {
         res.locals.urlInfo = {
           ...result.rows[0],
@@ -165,7 +170,8 @@ urlController.getExtendedLogs = (req, res, next) => {
   ON l._id = geo.log_id
   INNER JOIN client_logs c
   ON l._id = c.log_id
-  WHERE u.short_url = $1;`, [short_url])
+  WHERE u.short_url = $1
+  order by l.log_timestamp desc;`, [short_url])
   .then(result => {
     // if (!result.rows.length) res.status(400).send('Bad request');
     res.status(200).json(result.rows);

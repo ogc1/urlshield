@@ -57,7 +57,7 @@
           clientInfo.deviceMemory = clientInformation.deviceMemory;
           clientInfo.hardwareConcurrency = clientInformation.hardwareConcurrency;
 
-          return fetch('http://localhost:3000/api/logs/' + document.getElementById('url_short').textContent, {
+          return fetch('/api/logs/' + document.getElementById('url_short').textContent, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

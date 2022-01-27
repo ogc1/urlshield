@@ -15,7 +15,7 @@ export class Content extends React.Component {
             <ul>
               <li>Easy Link Shortening With Expiration</li>
               <li>Protection Against Malicious URLs</li>
-              <li>Detailed Link Analytics</li>
+              <li>Detailed Link Analytics & Tracking</li>
             </ul>
           </div>
         </div>
