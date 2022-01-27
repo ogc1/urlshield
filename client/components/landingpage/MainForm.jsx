@@ -4,11 +4,13 @@ export class MainForm extends React.Component {
 
   constructor(props) {
     super(props);
+    const c = new Date(Date.now() + 1000*60*60*24*30);
+    const defaultDate = `${c.getFullYear()}-${String(c.getMonth() + 1).padStart(2, 0)}-${String(c.getDate()).padStart(2, 0)}`;
     this.state = {
       url: '',
       longUrl: '',
       newUrl: '',
-      expiration: '2022-02-27',
+      expiration: defaultDate,
       isHidden: true
     }
     this.handleChangeUrl = this.handleChangeUrl.bind(this);
@@ -58,7 +60,7 @@ export class MainForm extends React.Component {
           <input id='url' name="url" type="url" value={this.state.url} onChange={this.handleChangeUrl} required/>
         </div>
         <div>
-          <label>Choose expiration date:</label>
+          <label>Select expiration date:</label>
           <input type="date" id="expiration" value={this.state.expiration} onChange={this.handleChangeExpiration} name="expiration" required/>
         </div>
         <div>

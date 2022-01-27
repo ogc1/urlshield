@@ -7,7 +7,6 @@ import { MyLinks } from './mylinks/MyLinks.jsx';
 const MAIN_STATE = 'MAIN_STATE';
 const ALT_STATE = 'ALT_STATE';
 
-
 export class App extends React.Component {
 
   constructor(props) {

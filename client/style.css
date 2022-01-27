@@ -116,6 +116,8 @@ footer ul li {
 #content-features {
   margin-left: 20px;
   padding-top: 20px;
+  font-size: 1.2em;
+  line-height: 1.2em;
 }
 
 .addspace {
@@ -124,6 +126,15 @@ footer ul li {
 
 #content-features ul {
   padding-left: 0px;
+}
+
+#subtitle {
+  font-weight: normal;
+  font-size: 0.5em;
+}
+
+#content-features ul li {
+  margin-bottom: 4px;
 }
 
 /* FORM STYLING */
@@ -157,7 +168,7 @@ form button {
   font-weight: bold;
   color: white;
   height: 60px !important;
-  
+  font-size: 1.2em;
 }
 
 form button:hover {
