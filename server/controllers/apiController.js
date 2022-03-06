@@ -1,8 +1,8 @@
 const axios = require('axios');
 
-const ipstackKey = '1834644106af119462bd28f01eeac372';
-const googleKey = 'AIzaSyC7QGTlwQzORmFtoGuCwjQuexQ3jHCV8us';
-const vpnapikey = 'facc450fe0f24171b0ed2505289ff4fa';
+const ipstackKey = '';
+const googleKey = '';
+const vpnapikey = '';
 
 const api = {};
 
